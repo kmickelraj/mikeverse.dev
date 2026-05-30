@@ -1,1 +1,491 @@
-<h1>Hello Mike!! this is your website</h1>
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MikeVerse | Personal Digital Universe</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Geist:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#131313",
+                        "on-surface-variant": "#c7c4d7",
+                        "secondary": "#4cd7f6",
+                        "surface-tint": "#c0c1ff",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#f0dbff",
+                        "inverse-on-surface": "#313030",
+                        "secondary-fixed": "#acedff",
+                        "on-tertiary-fixed": "#2c0051",
+                        "on-secondary-fixed": "#001f26",
+                        "inverse-primary": "#494bd6",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container": "#201f1f",
+                        "on-tertiary-fixed-variant": "#6900b3",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-fixed-variant": "#004e5c",
+                        "surface-container-highest": "#353534",
+                        "on-surface": "#e5e2e1",
+                        "primary": "#c0c1ff",
+                        "outline-variant": "#464554",
+                        "primary-container": "#8083ff",
+                        "secondary-container": "#03b5d3",
+                        "on-error": "#690005",
+                        "surface-variant": "#353534",
+                        "on-tertiary-container": "#400071",
+                        "surface-bright": "#3a3939",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "on-secondary-container": "#00424e",
+                        "secondary-fixed-dim": "#4cd7f6",
+                        "tertiary": "#ddb7ff",
+                        "background": "#131313",
+                        "on-primary-container": "#0d0096",
+                        "on-secondary": "#003640",
+                        "tertiary-container": "#b76dff",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#ddb7ff",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "primary-fixed": "#e1e0ff",
+                        "on-primary-fixed": "#07006c",
+                        "surface": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-tertiary": "#490080",
+                        "outline": "#908fa0",
+                        "on-background": "#e5e2e1",
+                        "on-primary": "#1000a9"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "planet-orbit-sm": "120px",
+                        "container-max": "1200px",
+                        "planet-orbit-lg": "300px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body-base": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "letterSpacing": "-0.02em", "fontWeight": "500"}],
+                        "label-mono": ["11px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-base": ["15px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-sm": ["13px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #000000; color: #e5e2e1; overflow-x: hidden; }
+        .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        
+        /* Starfield Effect */
+        #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle var(--duration) ease-in-out infinite; }
+        @keyframes twinkle { 
+            0%, 100% { opacity: 0; transform: scale(0.5); } 
+            50% { opacity: var(--opacity); transform: scale(1); } 
+        }
+
+        /* Orbit Logic via CSS Variables */
+        .orbit-node { 
+            position: absolute; 
+            transition: transform 0.1s linear; 
+            will-change: transform;
+        }
+        
+        .floating { animation: float 4s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .glow-hover:hover { 
+            box-shadow: 0 0 30px 4px rgba(192, 193, 255, 0.4); 
+            transform: scale(1.1) !important;
+            z-index: 50;
+        }
+
+        /* Entrance Animations */
+        .animate-in { opacity: 0; transform: translateY(20px); }
+        .reveal { animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline-line::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, #464554, transparent); }
+        .perspective-1000 { perspective: 1000px; }
+
+        /* Mobile Orbit Overrides */
+        @media (max-width: 768px) {
+            .orbit-container { display: flex !important; flex-wrap: wrap; gap: 16px; justify-content: center; height: auto !important; padding: 40px 16px; }
+            .orbit-node { position: relative !important; transform: none !important; animation: none !important; left: auto !important; top: auto !important; }
+            .orbit-node .label { opacity: 1 !important; position: static !important; transform: none !important; margin-top: 8px; }
+        }
+    </style>
+</head>
+<body class="font-body-base selection:bg-primary selection:text-on-primary">
+<canvas id="starfield"></canvas>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md dark:bg-black/80 border-b border-outline-variant/20 flex justify-between items-center px-margin-mobile md:px-gutter h-16 w-full">
+<div class="font-display-lg text-headline-md font-semibold tracking-tighter text-primary">MikeVerse</div>
+<nav class="hidden md:flex gap-stack-lg items-center">
+<a class="font-label-mono text-label-mono text-primary font-bold hover:text-primary transition-colors duration-300" href="#">Universe</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Timeline</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Missions</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Vault</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-stack-md">
+<button class="text-on-surface-variant hover:text-primary transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="sensors">sensors</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-all active:scale-95"><span class="material-symbols-outlined" data-icon="account_circle">account_circle</span></button>
+</div>
+</header>
+<main class="pt-16 min-h-screen">
+<!-- Hero Section -->
+<section class="relative h-[716px] flex flex-col items-center justify-center text-center px-margin-mobile">
+<div class="absolute inset-0 z-0 opacity-20" style="background-image: radial-gradient(circle at center, #c0c1ff 0%, transparent 70%);"></div>
+<div class="z-10 max-w-3xl animate-in reveal">
+<span class="font-label-mono text-label-mono text-primary tracking-[0.3em] uppercase mb-stack-sm block">System Active</span>
+<h1 class="font-display-lg text-display-lg md:text-[80px] leading-none mb-stack-md tracking-tighter">MikeVerse</h1>
+<p class="font-body-base text-on-surface-variant mb-stack-lg max-w-xl mx-auto">A hyper-connected digital sanctuary for cognitive optimization, life architecture, and expansive creative exploration.</p>
+<div class="flex flex-col md:flex-row gap-stack-md justify-center items-center">
+<button class="px-stack-lg py-stack-md bg-primary text-on-primary font-bold rounded-full hover:glow-hover hover:scale-105 transition-all duration-300 active:scale-95">Explore Universe</button>
+<button class="px-stack-lg py-stack-md border border-outline-variant/40 text-on-surface font-medium rounded-full hover:bg-surface-variant/30 hover:scale-105 transition-all active:scale-95">View Projects</button>
+</div>
+</div>
+</section>
+<!-- Universe Map (Galaxy View) -->
+<section class="py-stack-lg relative overflow-hidden h-[900px] flex items-center justify-center" id="map-section">
+<div class="text-center absolute top-20 z-20 animate-in">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Universe Map</h2>
+<p class="font-label-mono text-label-mono opacity-50 uppercase tracking-widest">Orbiting PARA Systems</p>
+</div>
+<div class="relative w-full h-full flex items-center justify-center perspective-1000 orbit-container">
+<!-- Central Core -->
+<div class="w-24 h-24 rounded-full bg-primary/20 border border-primary/50 glass flex items-center justify-center z-10 animate-pulse">
+<span class="material-symbols-outlined text-primary scale-150" data-icon="language">language</span>
+</div>
+<!-- Orbit Nodes - Data attributes control initial state and speeds -->
+<!-- Planner -->
+<div class="orbit-node group" data-radius-x="180" data-radius-y="100" data-speed="0.005">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-primary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary" data-icon="event_note">event_note</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-primary">Planner</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Syncing Daily Flux</p>
+</div>
+</div>
+<!-- Gym -->
+<div class="orbit-node group" data-offset="1.5" data-radius-x="240" data-radius-y="140" data-speed="0.004">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-secondary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary" data-icon="fitness_center">fitness_center</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-secondary">Gym</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Peak Performance Log</p>
+</div>
+</div>
+<!-- Garden -->
+<div class="orbit-node group" data-offset="3.2" data-radius-x="300" data-radius-y="180" data-speed="0.003">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-tertiary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-tertiary" data-icon="park">park</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-tertiary">Garden</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Digital Seeds Growing</p>
+</div>
+</div>
+<!-- PARA -->
+<div class="orbit-node group" data-offset="0.5" data-radius-x="360" data-radius-y="220" data-speed="0.002">
+<div class="w-16 h-16 rounded-full border border-primary/40 bg-primary/5 glass flex items-center justify-center group-hover:border-primary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-primary" data-icon="folder_managed">folder_managed</span>
+</div>
+<div class="label absolute top-20 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-primary">PARA</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Universal Architecture</p>
+</div>
+</div>
+<!-- Ideas -->
+<div class="orbit-node group" data-offset="4.8" data-radius-x="200" data-radius-y="120" data-speed="0.0045">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-primary-container transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary-container" data-icon="lightbulb">lightbulb</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-primary-container">Ideas</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Neural Sparks Capture</p>
+</div>
+</div>
+<!-- Parenting -->
+<div class="orbit-node group" data-offset="2.1" data-radius-x="280" data-radius-y="160" data-speed="0.0035">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-secondary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary" data-icon="family_history">family_history</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-secondary">Parenting</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Legacy Building</p>
+</div>
+</div>
+<!-- Daily Tracker -->
+<div class="orbit-node group" data-offset="5.5" data-radius-x="400" data-radius-y="250" data-speed="0.0015">
+<div class="w-12 h-12 rounded-full border border-outline-variant bg-surface-container-lowest glass flex items-center justify-center group-hover:border-secondary transition-all glow-hover floating">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-secondary" data-icon="query_stats">query_stats</span>
+</div>
+<div class="label absolute top-14 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity w-32 text-center pointer-events-none">
+<p class="font-label-mono text-label-mono text-secondary">Daily Tracker</p>
+<p class="text-[9px] text-on-surface-variant leading-tight">Quantum Habit Metrics</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Current Focus & Activity Feed Grid -->
+<section class="max-w-container-max mx-auto px-margin-mobile md:px-gutter pb-stack-lg" id="content-grid">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Current Focus (Timeline) -->
+<div class="lg:col-span-2 space-y-stack-lg animate-in">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="target">target</span>
+                            Current Focus
+                        </h3>
+</div>
+<div class="relative pl-gutter timeline-line space-y-stack-lg">
+<!-- Item 1 -->
+<div class="relative group">
+<div class="absolute -left-[28px] top-1 w-2 h-2 rounded-full bg-primary border-4 border-black group-hover:scale-150 transition-transform"></div>
+<div class="bg-surface-container-lowest border border-outline-variant/10 p-stack-md rounded-lg hover:bg-surface-variant/20 hover:scale-[1.01] transition-all cursor-default">
+<span class="font-label-mono text-label-mono text-primary uppercase mb-1 block">Building Now</span>
+<h4 class="font-headline-md text-headline-md mb-2">Neural Interface Core v2</h4>
+<p class="text-on-surface-variant font-body-sm">Redesigning the central dispatch system for MikeVerse to handle multi-threaded cognitive streams with zero latency.</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="relative group">
+<div class="absolute -left-[28px] top-1 w-2 h-2 rounded-full bg-secondary border-4 border-black group-hover:scale-150 transition-transform"></div>
+<div class="bg-surface-container-lowest border border-outline-variant/10 p-stack-md rounded-lg hover:bg-surface-variant/20 hover:scale-[1.01] transition-all cursor-default">
+<span class="font-label-mono text-label-mono text-secondary uppercase mb-1 block">Active Project</span>
+<h4 class="font-headline-md text-headline-md mb-2">Automated Garden Intelligence</h4>
+<p class="text-on-surface-variant font-body-sm">Integrating IoT sensors with LLM agents to monitor soil moisture and predict harvest times based on local climate data.</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="relative group">
+<div class="absolute -left-[28px] top-1 w-2 h-2 rounded-full bg-tertiary border-4 border-black group-hover:scale-150 transition-transform"></div>
+<div class="bg-surface-container-lowest border border-outline-variant/10 p-stack-md rounded-lg hover:bg-surface-variant/20 hover:scale-[1.01] transition-all cursor-default">
+<span class="font-label-mono text-label-mono text-tertiary uppercase mb-1 block">Quarterly Goal</span>
+<h4 class="font-headline-md text-headline-md mb-2">Expansion: Tokyo Node</h4>
+<p class="text-on-surface-variant font-body-sm">Curating travel data, cultural nodes, and local contacts for the Q4 exploratory mission to Japan.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity Feed -->
+<div class="space-y-stack-lg animate-in">
+<h3 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="timeline">timeline</span>
+                        Recent Activity
+                    </h3>
+<div class="space-y-unit flex flex-col">
+<!-- Activity Item -->
+<div class="group flex items-center justify-between p-stack-md bg-surface-container-lowest/50 border-b border-outline-variant/5 hover:bg-surface-container-high hover:pl-6 transition-all">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary text-body-base group-hover:scale-125 transition-transform" data-icon="edit_note">edit_note</span>
+<div>
+<p class="font-body-base text-on-surface leading-tight">Daily Log Updated</p>
+<p class="font-label-mono text-label-mono text-on-surface-variant/60">SYSTEM_UP_99.9%</p>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">14:22</span>
+</div>
+<div class="group flex items-center justify-between p-stack-md bg-surface-container-lowest/50 border-b border-outline-variant/5 hover:bg-surface-container-high hover:pl-6 transition-all">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-secondary text-body-base group-hover:scale-125 transition-transform" data-icon="database">database</span>
+<div>
+<p class="font-body-base text-on-surface leading-tight">Vault Backup Complete</p>
+<p class="font-label-mono text-label-mono text-on-surface-variant/60">ENCRYPTION: AES-256</p>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">12:05</span>
+</div>
+<div class="group flex items-center justify-between p-stack-md bg-surface-container-lowest/50 border-b border-outline-variant/5 hover:bg-surface-container-high hover:pl-6 transition-all">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-tertiary text-body-base group-hover:scale-125 transition-transform" data-icon="rocket_launch">rocket_launch</span>
+<div>
+<p class="font-body-base text-on-surface leading-tight">New Mission: Gym PR</p>
+<p class="font-label-mono text-label-mono text-on-surface-variant/60">TARGET_REACHED</p>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">08:15</span>
+</div>
+<a class="text-center font-label-mono text-label-mono text-primary p-stack-md hover:underline tracking-widest uppercase mt-stack-sm hover:scale-105 transition-transform" href="#">View Full Log Cluster</a>
+</div>
+<!-- Side Profile Mini Card -->
+<div class="bg-[#0A0A0A] border border-outline-variant/10 rounded-xl p-stack-md space-y-stack-md hover:border-primary/30 transition-colors">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-primary/20">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="A futuristic close-up portrait of a digital entity or sleek avatar with subtle neon outlines and glowing circuitry patterns visible under translucent skin. The lighting is low-key with high-contrast violet and cyan accents, set against an absolute black background that emphasizes the technological and advanced nature of the person's digital identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC13PFVwP2MMRafzw9udrDrhMXu8dlVWYKIMZ2exf0eW5ZzNL9zXLcjKzNYVihroXGD2Li5H0OqbRHLf9tU5S3g_G7dmOav7gDgDTxTZgzZ3UhkKe87eA2ATohz0E1nnEPsSWlQfJ722ElkLbiG9KhVs_oWTOgI9-X2gIFr_tifBSHJy7_wcJd9M5fOK7l6LYC1e31ZU5K17xp4kqvS1W0ACW9oh5RcWJbnm8zHWHO8WzUQPwfYQ1dt1ubJY9AF4nk1cQQ3S-liQKCC"/>
+</div>
+<div>
+<h5 class="font-headline-md text-on-surface">Mike_Alpha</h5>
+<p class="font-label-mono text-label-mono text-primary">STATUS: ORBITING</p>
+</div>
+</div>
+<div class="flex justify-between font-label-mono text-[10px] text-on-surface-variant opacity-60">
+<span>UPTIME: 365D</span>
+<span>SYNC: 100%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-transparent w-full py-stack-md border-t border-outline-variant/10">
+<div class="flex justify-between items-center px-margin-mobile md:px-gutter max-w-container-max mx-auto flex-col md:flex-row gap-stack-md">
+<div class="font-label-mono text-primary font-label-mono">© 2024 MIKEVERSE | SYSTEM NOMINAL</div>
+<div class="flex gap-stack-lg items-center">
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer uppercase tracking-widest" href="#">NEURAL_LINK</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer uppercase tracking-widest" href="#">VORTEX</a>
+<a class="font-label-mono text-label-mono text-on-surface-variant hover:text-primary transition-colors cursor-pointer uppercase tracking-widest" href="#">LOG_OUT</a>
+</div>
+</div>
+</footer>
+<!-- SideNavBar (Desktop Only) -->
+<aside class="fixed left-0 top-0 h-screen w-64 border-r border-outline-variant/20 bg-surface-container-lowest/50 backdrop-blur-xl dark:bg-black/50 hidden md:flex flex-col h-full py-stack-lg z-40 transform -translate-x-full transition-transform duration-300 hover:translate-x-0 group/sidebar">
+<div class="absolute right-[-30px] top-1/2 -translate-y-1/2 bg-surface-container-lowest border border-l-0 border-outline-variant/20 h-20 w-[30px] flex items-center justify-center rounded-r-lg cursor-pointer group-hover/sidebar:hidden">
+<span class="material-symbols-outlined text-primary animate-pulse" data-icon="chevron_right">chevron_right</span>
+</div>
+<div class="px-gutter mb-stack-lg">
+<div class="font-display-lg text-headline-md text-primary font-bold mb-1">MikeVerse</div>
+<p class="font-label-mono text-[10px] text-on-surface-variant/60 uppercase">System Hub v4.0.2</p>
+</div>
+<nav class="flex-1 px-unit">
+<a class="flex items-center gap-stack-md p-stack-md font-label-mono text-label-mono text-primary border-r-2 border-primary bg-primary/5 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="language">language</span> Universe
+</a>
+<a class="flex items-center gap-stack-md p-stack-md font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="timeline">timeline</span> Timeline
+</a>
+<a class="flex items-center gap-stack-md p-stack-md font-label-mono text-label-mono text-on-surface-variant hover:bg-surface-variant/30 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="target">target</span> Missions
+</a>
+</nav>
+</aside>
+<!-- Floating Action Button -->
+<button class="fixed bottom-gutter right-gutter w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg shadow-primary/20 flex items-center justify-center z-50 hover:scale-110 hover:rotate-12 active:scale-95 transition-all">
+<span class="material-symbols-outlined font-variation-settings: 'FILL' 1;" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</button>
+<script>
+    // Starfield Generation
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    
+    function initStars() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        stars = [];
+        for (let i = 0; i < 200; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 2,
+                opacity: Math.random(),
+                speed: 0.2 + Math.random() * 0.5
+            });
+        }
+    }
+
+    function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(star => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+            ctx.fill();
+            
+            star.y -= star.speed;
+            if (star.y < 0) star.y = canvas.height;
+        });
+        requestAnimationFrame(animateStars);
+    }
+    initStars();
+    animateStars();
+    window.addEventListener('resize', initStars);
+
+    // Universe Orbit Logic
+    const nodes = document.querySelectorAll('.orbit-node');
+    let time = 0;
+    
+    function updateOrbits() {
+        if (window.innerWidth > 768) {
+            time += 0.5;
+            nodes.forEach(node => {
+                if (node.matches(':hover')) return; // Pause on hover
+                
+                const rx = parseFloat(node.dataset.radiusX);
+                const ry = parseFloat(node.dataset.radiusY);
+                const speed = parseFloat(node.dataset.speed);
+                const offset = parseFloat(node.dataset.offset || 0);
+                
+                const angle = (time * speed) + offset;
+                const x = Math.cos(angle) * rx;
+                const y = Math.sin(angle) * ry;
+                
+                node.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        }
+        requestAnimationFrame(updateOrbits);
+    }
+    updateOrbits();
+
+    // Intersection Observer for Entrance Animations
+    const observerOptions = { threshold: 0.1 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('reveal');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+    // Sticky Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('bg-black/95', 'py-2');
+            header.classList.remove('bg-surface/80', 'py-0');
+        } else {
+            header.classList.remove('bg-black/95', 'py-2');
+            header.classList.add('bg-surface/80', 'py-0');
+        }
+    });
+</script>
+</body></html>
